@@ -7,7 +7,7 @@ class JsonModel {
 
   JsonModel({this.albumId, this.id, this.title, this.url, this.thumbnailUrl});
 
-  JsonModel.fromJson(Map<dynamic, dynamic> json) {
+  JsonModel.fromJson(Map<String, dynamic> json) {
     albumId = json['albumId'];
     id = json['id'];
     title = json['title'];
@@ -16,7 +16,7 @@ class JsonModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<dynamic, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['albumId'] = this.albumId;
     data['id'] = this.id;
     data['title'] = this.title;
