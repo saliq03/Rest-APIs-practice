@@ -58,22 +58,22 @@ class _HomeState extends State<Home> {
       ),
       body: FutureBuilder(future: FetchDataWithOutModel(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        // if(snapshot.connectionState==ConnectionState.active){
-        return ListView.builder(itemBuilder: (context, index){
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(mydata[index]["thumbnailUrl"])),
-            title: Text(mydata[index]["title"]),
-            subtitle: Text(snapshot.connectionState.toString()),
-          );
-        });
-      // }
-      //   else if(snapshot.hasError){
-      //     return Text(snapshot.hasError.toString());
-      //   }
-      //   else{
-      //     return Center(child: CircularProgressIndicator());
-      //   }
+        if(snapshot.connectionState==ConnectionState.waiting){
+          return Center(child: CircularProgressIndicator());
+        }
+        else if(snapshot.hasError){
+          return Text(snapshot.hasError.toString());
+        }
+        else{
+          return ListView.builder(itemBuilder: (context, index){
+            return ListTile(
+              leading: CircleAvatar(
+                  backgroundImage: NetworkImage(mydata[index]["thumbnailUrl"])),
+              title: Text(mydata[index]["title"]),
+              subtitle: Text(snapshot.connectionState.toString()),
+            );
+          });
+        }
       }),
     );
   }
