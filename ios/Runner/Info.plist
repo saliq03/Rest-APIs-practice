@@ -20,6 +20,12 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to select images.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take pictures.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need access to your microphone to record videos.</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

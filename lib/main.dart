@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rest_api_practice/Productshow.dart';
+import 'package:rest_api_practice/UploadImageToApi.dart';
 import 'package:rest_api_practice/home.dart';
 import 'package:rest_api_practice/practicePost.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Practicepost()
+      home: Uploadimagetoapi()
     );
   }
 }
