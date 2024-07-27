@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rest_api_practice/Productshow.dart';
 import 'package:rest_api_practice/home.dart';
+import 'package:rest_api_practice/practicePost.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ProductShow()
+      home: Practicepost()
     );
   }
 }
