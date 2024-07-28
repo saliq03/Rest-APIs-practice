@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class Uploadimagetoapi extends StatefulWidget {
   const Uploadimagetoapi({super.key});
@@ -12,6 +13,7 @@ class Uploadimagetoapi extends StatefulWidget {
 
 class _UploadimagetoapiState extends State<Uploadimagetoapi> {
   File? pickedImage;
+  bool Showspinner=false;
 
   PickImage()async{
     try {
@@ -29,6 +31,9 @@ class _UploadimagetoapiState extends State<Uploadimagetoapi> {
 
   UploadImage()async{
     if(pickedImage!=null){
+      setState(() {
+        Showspinner=true;
+      });
       try {
         print("qwerty");
         var stream = new http.ByteStream(pickedImage!.openRead());
@@ -46,6 +51,7 @@ class _UploadimagetoapiState extends State<Uploadimagetoapi> {
         var response = await request.send();
         if (response.statusCode == 200) {
           print("image uploaded");
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("image uploaded")));
         }
         else {
           print("fialed");
@@ -54,6 +60,11 @@ class _UploadimagetoapiState extends State<Uploadimagetoapi> {
       catch (e){
         print(e.toString());
       }
+
+      setState(() {
+        Showspinner=false;
+
+      });
     }
 
 
@@ -65,32 +76,35 @@ class _UploadimagetoapiState extends State<Uploadimagetoapi> {
         title: Text("Upload Image (Post API)"),
       ),
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: (){
-              print("image called");
-              PickImage();
-            },
-            child: Container(
-              height: 200,
-              width: 150,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(11)
+      body: ModalProgressHUD(
+        inAsyncCall: Showspinner,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: (){
+                print("image called");
+                PickImage();
+              },
+              child: Container(
+                height: 200,
+                width: 150,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(11)
+                ),
+                child: pickedImage==null?Center(child: Icon(Icons.camera_alt_outlined)):
+                ClipRRect(borderRadius: BorderRadius.circular(11),
+                    child: Image.file(pickedImage!,width: 150,height: 200,fit: BoxFit.cover,)),
               ),
-              child: pickedImage==null?Center(child: Icon(Icons.camera_alt_outlined)):
-              ClipRRect(borderRadius: BorderRadius.circular(11),
-                  child: Image.file(pickedImage!,width: 150,height: 200,fit: BoxFit.cover,)),
             ),
-          ),
-          SizedBox(height: 20,width: MediaQuery.of(context).size.width,),
-          ElevatedButton(onPressed: (){
-          UploadImage();
-          }, child: Text("Upload"))
-        ],
+            SizedBox(height: 20,width: MediaQuery.of(context).size.width,),
+            ElevatedButton(onPressed: (){
+            UploadImage();
+            }, child: Text("Upload"))
+          ],
+        ),
       ),
     );
   }
