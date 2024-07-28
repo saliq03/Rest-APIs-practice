@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart'as http;
 
 class Uploadimagetoapi extends StatefulWidget {
   const Uploadimagetoapi({super.key});
@@ -24,6 +25,38 @@ class _UploadimagetoapiState extends State<Uploadimagetoapi> {
     catch (e){
       print(e.toString());
     }
+  }
+
+  UploadImage()async{
+    if(pickedImage!=null){
+      try {
+        print("qwerty");
+        var stream = new http.ByteStream(pickedImage!.openRead());
+        stream.cast();
+        var length = await pickedImage!.length();
+        var Url = "https://fakestoreapi.com/products";
+
+        var request = new http.MultipartRequest("POST", Uri.parse(Url));
+        request.fields['title'] = "static field";
+        var multipart = new http.MultipartFile(
+            "image",
+            stream,
+            length);
+        request.files.add(multipart);
+        var response = await request.send();
+        if (response.statusCode == 200) {
+          print("image uploaded");
+        }
+        else {
+          print("fialed");
+        }
+      }
+      catch (e){
+        print(e.toString());
+      }
+    }
+
+
   }
   @override
   Widget build(BuildContext context) {
@@ -55,7 +88,7 @@ class _UploadimagetoapiState extends State<Uploadimagetoapi> {
           ),
           SizedBox(height: 20,width: MediaQuery.of(context).size.width,),
           ElevatedButton(onPressed: (){
-
+          UploadImage();
           }, child: Text("Upload"))
         ],
       ),
