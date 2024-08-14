@@ -54,7 +54,7 @@ class _UploadimagetoapiState extends State<Uploadimagetoapi> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("image uploaded")));
         }
         else {
-          print("fialed");
+          print("failed");
         }
       }
       catch (e){
